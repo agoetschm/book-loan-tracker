@@ -12,7 +12,7 @@ public record Author (String id, String firstName, String lastName) {
             new Author("author-3", "Bill", "Bryson")
     );
 
-    public static Author getById(String id) {
+    public static Author getById(int id) {
         return authors.stream()
 				.filter(author -> author.id().equals(id))
 				.findFirst()
