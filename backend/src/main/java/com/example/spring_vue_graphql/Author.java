@@ -4,17 +4,17 @@ package com.example.spring_vue_graphql;
 import java.util.Arrays;
 import java.util.List;
 
-public record Author (String id, String firstName, String lastName) {
+public record Author (int id, String firstName, String lastName) {
 
     private static List<Author> authors = Arrays.asList(
-            new Author("author-1", "Joshua", "Bloch"),
-            new Author("author-2", "Douglas", "Adams"),
-            new Author("author-3", "Bill", "Bryson")
+            new Author(1, "Joshua", "Bloch"),
+            new Author(2, "Douglas", "Adams"),
+            new Author(3, "Bill", "Bryson")
     );
 
     public static Author getById(int id) {
         return authors.stream()
-				.filter(author -> author.id().equals(id))
+				.filter(author -> author.id() == id)
 				.findFirst()
 				.orElse(null);
     }
