@@ -44,11 +44,7 @@ export type Loan = {
 
 export type Query = {
   __typename?: 'Query'
-  bookById?: Maybe<Book>
-}
-
-export type QueryBookByIdArgs = {
-  id?: InputMaybe<Scalars['Int']['input']>
+  books?: Maybe<Array<Book>>
 }
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
@@ -196,12 +192,7 @@ export type QueryResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
-  bookById?: Resolver<
-    Maybe<ResolversTypes['Book']>,
-    ParentType,
-    ContextType,
-    Partial<QueryBookByIdArgs>
-  >
+  books?: Resolver<Maybe<Array<ResolversTypes['Book']>>, ParentType, ContextType>
 }
 
 export type Resolvers<ContextType = any> = {

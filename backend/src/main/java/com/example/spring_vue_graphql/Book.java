@@ -16,4 +16,8 @@ public record Book(int id, String title, int pageCount, int authorId) {
         .findFirst()
         .orElse(null);
   }
+
+  public static List<Book> getAll() {
+    return books;
+  }
 }

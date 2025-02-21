@@ -1,66 +1,62 @@
 <script setup lang="ts">
 import { onMounted, type Ref } from 'vue'
-import { ref, computed } from 'vue'
-import type { Book } from '../types/generated'
+import { ref } from 'vue'
+import type { Book, Query } from '../types/generated'
 
-// import { gql } from "@apollo/client"
-import { request } from "graphql-request"
-
-// type Book = {
-//   id: Id
-//   title: string
-//   author: Person
-//   loan?: Loan
-// }
-// type Id = number
-// type Loan = {
-//   person: Person
-//   date: Date
-// }
-// type Person = string
+import { ApolloClient, gql, InMemoryCache } from '@apollo/client/core'
 
 let idBook = 0
 const books: Ref<Array<Book>> = ref([])
 
 let idAuthor = 0
 
+const client = new ApolloClient({
+  uri: 'http://localhost:8080/graphql',
+  cache: new InMemoryCache(),
+  connectToDevTools: true,
+})
+
+const getBooks = async () => {
+  const { data } = await client.query<Query>({
+    query: gql`
+      query getBooks {
+        books {
+          id
+          title
+          author {
+            id
+            firstName
+            lastName
+          }
+        }
+      }
+    `,
+  })
+
+  return data.books ?? []
+}
+
 onMounted(() => {
-  console.log(`the component is now mountedd.`)
+  console.log(`the component is now mounted.`)
 
-  // export const getPosts = async () => {
-  //   const data = await request<GetPostListQuery>(
-  //     "http://localhost:10003",
-  //     gql`
-  //         query GetPostList {
-  //             posts {
-  //                 nodes {
-  //                     excerpt
-  //                     id
-  //                     databaseId
-  //                     title
-  //                     slug
-  //                 }
-  //             }
-  //         }
-  //     `
-  //   )
+  getBooks().then((bs) => {
+    console.log(bs)
+    books.value = bs
+  })
 
-  //   return data?.posts?.nodes?.slice() ?? []
-  // }
-
-  books.value = [
-    {
-      id: idBook++,
-      title: "Hitchhiker's guide to the galaxy",
-      author: { id: idAuthor++, firstName: 'Douglas', lastName: 'Adams' },
-    },
-    {
-      id: idBook++,
-      title: 'Mistborn',
-      author: { id: idAuthor++, firstName: 'Brandon', lastName: 'Sanderson' },
-      loan: { person: 'John', date: new Date('12 Feb 2025') },
-    },
-  ]
+  // books.value = [
+  //   {
+  //     id: idBook++,
+  //     title: "Hitchhiker's guide to the galaxy",
+  //     author: { id: idAuthor++, firstName: 'Douglas', lastName: 'Adams' },
+  //   },
+  //   {
+  //     id: idBook++,
+  //     title: 'Mistborn',
+  //     author: { id: idAuthor++, firstName: 'Brandon', lastName: 'Sanderson' },
+  //     loan: { person: 'John', date: new Date('12 Feb 2025') },
+  //   },
+  // ]
 })
 
 const friend = ref()
