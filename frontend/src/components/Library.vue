@@ -5,10 +5,7 @@ import type { Book, Query } from '../types/generated'
 
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client/core'
 
-let idBook = 0
 const books: Ref<Array<Book>> = ref([])
-
-let idAuthor = 0
 
 const client = new ApolloClient({
   uri: 'http://localhost:8080/graphql',
@@ -43,20 +40,6 @@ onMounted(() => {
     console.log(bs)
     books.value = bs
   })
-
-  // books.value = [
-  //   {
-  //     id: idBook++,
-  //     title: "Hitchhiker's guide to the galaxy",
-  //     author: { id: idAuthor++, firstName: 'Douglas', lastName: 'Adams' },
-  //   },
-  //   {
-  //     id: idBook++,
-  //     title: 'Mistborn',
-  //     author: { id: idAuthor++, firstName: 'Brandon', lastName: 'Sanderson' },
-  //     loan: { person: 'John', date: new Date('12 Feb 2025') },
-  //   },
-  // ]
 })
 
 const friend = ref()
