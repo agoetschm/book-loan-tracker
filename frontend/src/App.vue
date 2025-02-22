@@ -5,7 +5,7 @@ import Library from './components/Library.vue'
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
@@ -18,7 +18,19 @@ import Library from './components/Library.vue'
     </div>
   </header>
 
-  <RouterView />
+  <RouterView /> -->
+
+  <section class="section">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        Hello World
+      </h1>
+      <p class="subtitle">
+        My first website with
+        <strong class="has-text-primary">Bulma</strong>!
+      </p>
+    </div>
+  </section>
 
   <Library />
 </template>
