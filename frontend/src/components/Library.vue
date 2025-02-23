@@ -70,21 +70,45 @@ function recover(bookId: number) {
 <template>
   Friend: <input v-model="friend" required placeholder="Friend name" />
 
-  <ul>
-    <li v-for="book in books" :key="book.id">
-      {{ book.author.lastName }}, {{ book.author.firstName }}: {{ book.title }}
-      <div v-if="book.loan != undefined">
-        lent on {{ book.loan?.date.toDateString() }} to {{ book.loan?.person }}
-        <br />
-        <button @click="recover(book.id)">Recover book</button>
+  <div class="section">
+    <div class="container">
+      <div class="grid is-col-min-10">
+        <div class="cell" v-for="book in books" :key="book.id">
+          <div class="card" :class="book.loan != undefined ? 'has-background-warning-light' : ''">
+            <div class="card-content">
+              <p class="title is-4">
+                {{ book.title }}
+              </p>
+              <p class="subtitle is-5">{{ book.author.firstName }} {{ book.author.lastName }}</p>
+              <p v-if="book.loan != undefined">
+                lent on {{ book.loan?.date.toDateString() }} to {{ book.loan?.person }}
+              </p>
+              <div class="button" @click="recover(book.id)" v-if="book.loan != undefined">
+                Recover book
+              </div>
+              <div class="button" @click="lend(book.id)" v-else>Lend book</div>
+            </div>
+            <!-- <footer class="card-footer">
+              <p class="card-footer-item" v-if="book.loan != undefined">
+                <a href="#" class="card-footer-item" @click="recover(book.id)">Recover book</a>
+              </p>
+              <p class="card-footer-item" v-else>
+                <a href="#" class="card-footer-item" @click="lend(book.id)">Lend book</a>
+              </p>
+            </footer> -->
+          </div>
+        </div>
       </div>
-      <div v-else>
-        <!-- <form @submit.prevent="lend(book.id)">
-          <input v-model="friend" required placeholder="Friend name">
-          <button>Lend book</button>
-        </form> -->
-        <button @click="lend(book.id)">Lend book</button>
-      </div>
-    </li>
-  </ul>
+    </div>
+  </div>
 </template>
+
+<!-- <style scoped>
+.card {
+    display:flex;
+    flex-direction: column;
+}
+.cart-footer {
+    margin-top: auto;
+}
+</style> -->
