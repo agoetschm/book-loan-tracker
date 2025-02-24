@@ -11,17 +11,19 @@ const emit = defineEmits<{
 }>()
 
 const friend = ref()
+const lending = ref(false)
 
 function lend() {
-  console.log('lend')
   const newBook = {
     ...props.book,
     loan: { person: friend.value, date: new Date() },
   }
   emit('updateBook', newBook)
+  lending.value = false
+  friend.value = ""
 }
 
-function recover(bookId: number) {
+function recover() {
   const newBook = {
     ...props.book,
     loan: undefined,
@@ -38,10 +40,24 @@ function recover(bookId: number) {
       </p>
       <p class="subtitle is-5">{{ book.author.firstName }} {{ book.author.lastName }}</p>
       <p v-if="book.loan != undefined">
-        lent on {{ book.loan?.date.toDateString() }} to {{ book.loan?.person }}
+        Lent to <strong>{{ book.loan?.person }}</strong> on {{ book.loan?.date.toLocaleDateString() }}
       </p>
-      <div class="button" @click="recover(book.id)" v-if="book.loan != undefined">Recover book</div>
-      <div class="button" @click="lend(book.id)" v-else>Lend book</div>
+      <div class="button" @click="recover()" v-if="book.loan != undefined">Recover book</div>
+      <div v-else>
+        <div v-if="lending">
+          <div class="field has-addons">
+          <p class="control">
+            <input class="input" type="text" placeholder="Friend name" v-model="friend"/>
+          </p>
+          <p class="control">
+            <button class="button" @click="lend()">Lend</button>
+          </p>
+        </div>
+        </div>
+        <div v-else>
+          <div class="button" @click="lending = true">Lend book</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

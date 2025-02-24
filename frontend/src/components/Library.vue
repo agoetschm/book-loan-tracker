@@ -44,7 +44,6 @@ onMounted(() => {
 })
 
 const updateBook = (newBook: Book) => {
-  console.log('updateBook')
   books.value = books.value.map((b) => {
     if (newBook.id === b.id) return newBook
     else return b
