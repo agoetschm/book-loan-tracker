@@ -16,8 +16,8 @@ public record Book(int id, String title, int pageCount, int authorId) {
       new Book(8, "Harry Potter and the Philosopher's Stone", 1, 7),
       new Book(9, "The Lies of Locke Lamora", 1, 8),
       new Book(10, "Warbreaker", 1, 9),
-      new Book(10, "Mistborn", 1, 9),
-      new Book(11, "Barbarian Days: A Surfing Life", 1, 10)
+      new Book(11, "Mistborn", 1, 9),
+      new Book(12, "Barbarian Days: A Surfing Life", 1, 10)
   );
 
   public static Book getById(int id) {
